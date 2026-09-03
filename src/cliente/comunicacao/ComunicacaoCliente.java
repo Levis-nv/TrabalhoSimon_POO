@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ComunicacaoCliente {
 
@@ -40,5 +41,65 @@ public class ComunicacaoCliente {
 
         Mensagem resposta = (Mensagem) input.readObject();
         return (String) resposta.getDados();
+    }
+
+    public String alterarAluno(Aluno aluno) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.ALTERAR, aluno);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (String) resposta.getDados();
+    }
+
+    public String excluirAluno(int idAluno) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.EXCLUIR, idAluno);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (String) resposta.getDados();
+    }
+
+    public ArrayList<Aluno> listarAluno() throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.LISTAR);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (ArrayList<Aluno>) resposta.getDados();
+    }
+
+    public ArrayList<Aluno> listarAlunoCategoria() throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.LISTAR_CATEGORIA);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (ArrayList<Aluno>) resposta.getDados();
+    }
+
+    public ArrayList<Aluno> listarAlunoEscola() throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.LISTAR_ESCOLA);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (ArrayList<Aluno>) resposta.getDados();
+    }
+
+    public ArrayList<Aluno> listarAlunoRisco() throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.LISTAR_RISCO);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (ArrayList<Aluno>) resposta.getDados();
     }
 }
