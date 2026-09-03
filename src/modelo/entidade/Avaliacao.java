@@ -1,4 +1,4 @@
-package simon.modelo.entidade;
+package modelo.entidade;
 
 import java.io.Serializable;
 import java.util.Date;

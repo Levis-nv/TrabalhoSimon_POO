@@ -1,4 +1,4 @@
-package simon.servidor.repositorio;
+package servidor.repositorio;
 
 import simon.modelo.entidade.Aluno;
 import java.util.ArrayList;

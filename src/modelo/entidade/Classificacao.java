@@ -1,4 +1,4 @@
-package simon.modelo.entidade;
+package modelo.entidade;
 
 public enum Classificacao {
     MAGREZA,

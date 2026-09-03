@@ -1,8 +1,8 @@
-package simon.servidor.negocio;
+package servidor.negocio;
 
 import simon.modelo.entidade.Aluno;
 import simon.modelo.entidade.Classificacao;
-import simon.servidor.repositorio.AlunoRepositorio;
+import servidor.repositorio.AlunoRepositorio;
 
 import java.util.ArrayList;
 import java.util.List;

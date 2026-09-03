@@ -1,4 +1,4 @@
-package simon.cliente.ui;
+package cliente.ui;
 
 import simon.modelo.entidade.Aluno;
 import simon.modelo.entidade.Sexo;

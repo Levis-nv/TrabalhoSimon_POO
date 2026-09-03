@@ -1,7 +1,7 @@
-package simon.servidor.fachada;
+package servidor.fachada;
 
 import simon.modelo.entidade.Aluno;
-import simon.servidor.negocio.AlunoNegocio;
+import servidor.negocio.AlunoNegocio;
 import java.util.List;
 
 public class ServidorFachada {

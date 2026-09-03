@@ -1,7 +1,7 @@
-package simon.cliente.fachada;
+package cliente.fachada;
 
 import simon.modelo.entidade.*;
-import simon.cliente.comunicacao.ComunicacaoCliente;
+import cliente.comunicacao.ComunicacaoCliente;
 
 import java.io.IOException;
 

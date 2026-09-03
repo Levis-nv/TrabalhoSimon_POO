@@ -1,4 +1,4 @@
-package simon.modelo.entidade;
+package modelo.entidade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,27 +37,63 @@ public class Aluno implements Serializable {
     }
 
     public String getNome() {
-        return this.nome;
+        return nome;
     }
 
-    public int getIdade(){
+    public void setNome(String nome) {
+        if (nome != null && !nome.isEmpty()) {
+            this.nome = nome;
+        }
+    }
+
+    public int getIdade() {
         return this.idade;
+    }
+
+    public void setIdade(int idade) {
+        if (idade > 0) {
+            this.idade = idade;
+        }
     }
 
     public Sexo getSexo() {
         return this.sexo;
     }
 
+    public void setSexo(Sexo sexo) {
+        if (sexo != null) {
+            this.sexo = sexo;
+        }
+    }
+
     public double getPeso() {
         return this.peso;
+    }
+
+    public void setPeso(double peso) {
+        if (peso > 0) {
+            this.peso = peso;
+        }
     }
 
     public double getAltura() {
         return this.altura;
     }
 
+    public void setAltura(double altura) {
+        if (altura > 0) {
+            this.altura = altura;
+        }
+    }
+
     public Escola getEscola() {
-        return escola;
+        return this.escola;
+    }
+
+    public void setEscola(Escola escola) {
+        if (escola != null) {
+            this.escola = escola;
+        }
     }
 
     public double getImc() {
