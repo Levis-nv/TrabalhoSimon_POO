@@ -1,17 +1,16 @@
 package servidor.negocio;
 
-import simon.modelo.entidade.Aluno;
-import simon.modelo.entidade.Classificacao;
-import servidor.repositorio.AlunoRepositorio;
+import modelo.entidade.Aluno;
+import modelo.entidade.Classificacao;
+import servidor.repositorio.RepositorioAluno;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class AlunoNegocio {
-    private AlunoRepositorio repositorio;
+public class ControleAluno {
+    private RepositorioAluno repositorio;
 
-    public AlunoNegocio() {
-        this.repositorio = AlunoRepositorio.getInstancia();
+    public ControleAluno() {
+        this.repositorio = RepositorioAluno.getInstancia();
     }
 
     public void CadastrarAluno(Aluno aluno) throws Exception {
@@ -29,15 +28,18 @@ public class AlunoNegocio {
         // cklassif
         if (imc < 18.5) {
             aluno.setClassificacao(Classificacao.MAGREZA);
+
         } else if (imc < 25) {
             aluno.setClassificacao(Classificacao.NORMAL);
+
         } else if (imc < 30) {
             aluno.setClassificacao(Classificacao.SOBREPESO);
+
         } else if (imc < 40) {
             aluno.setClassificacao(Classificacao.OBESIDADE);
-        } else {}
+        }
 
-        repositorio.adicionar(aluno);
+        repositorio.adicionarAluno(aluno);
     }
 
     public ArrayList<Aluno> listarAlunos() {

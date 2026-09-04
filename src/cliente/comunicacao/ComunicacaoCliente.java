@@ -83,8 +83,8 @@ public class ComunicacaoCliente {
         return (ArrayList<Aluno>) resposta.getDados();
     }
 
-    public ArrayList<Aluno> listarAlunoEscola() throws IOException, ClassNotFoundException {
-        Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.LISTAR_ESCOLA);
+    public ArrayList<Aluno> listarAlunoEscola(int idEscola) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.LISTAR_ESCOLA, idEscola);
 
         output.writeObject(mensagem);
         output.flush();
@@ -101,5 +101,45 @@ public class ComunicacaoCliente {
 
         Mensagem resposta = (Mensagem) input.readObject();
         return (ArrayList<Aluno>) resposta.getDados();
+    }
+
+    public String cadastrarEscola(Escola escola) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ESCOLA, Operacao.CADASTRAR, escola);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (String) resposta.getDados();
+    }
+
+    public String alterarEscola(Escola escola) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ESCOLA, Operacao.ALTERAR, escola);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (String) resposta.getDados();
+    }
+
+    public String excluirEscola(int idEscola) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ESCOLA, Operacao.EXCLUIR, idEscola);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (String) resposta.getDados();
+    }
+
+    public ArrayList<Escola> listarEscola() throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ESCOLA, Operacao.LISTAR);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (ArrayList<Escola>) resposta.getDados();
     }
 }

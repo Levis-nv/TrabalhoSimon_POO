@@ -1,15 +1,15 @@
 package servidor.fachada;
 
-import simon.modelo.entidade.Aluno;
-import servidor.negocio.AlunoNegocio;
+import modelo.entidade.Aluno;
+import servidor.negocio.ControleAluno;
 import java.util.List;
 
 public class ServidorFachada {
     private static ServidorFachada instancia;
-    private AlunoNegocio alunoNegocio;
+    private ControleAluno controleAluno;
 
     private ServidorFachada() {
-        this.alunoNegocio = new AlunoNegocio();
+        this.controleAluno = new ControleAluno();
     }
 
     public static ServidorFachada getInstancia() {
@@ -20,18 +20,18 @@ public class ServidorFachada {
     }
 
     public void cadastrarAluno(Aluno aluno) throws Exception {
-        alunoNegocio.CadastrarAluno(aluno);
+        controleAluno.CadastrarAluno(aluno);
     }
 
     public List<Aluno> listarAlunos() {
-        return alunoNegocio.listarAlunos();
+        return controleAluno.listarAlunos();
     }
 
     public Aluno buscarAlunoPorId(int id) {
-        return alunoNegocio.buscarAluno(id);
+        return controleAluno.buscarAluno(id);
     }
 
     public void removerAluno(int id) {
-        alunoNegocio.removerAluno(id);
+        controleAluno.removerAluno(id);
     }
 }
