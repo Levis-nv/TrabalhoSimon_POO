@@ -10,7 +10,7 @@ public class RepositorioAluno {
     private ArrayList<Aluno> bancoDeAlunos;
     private int id;
 
-    private RepositorioAluno() {
+    public RepositorioAluno() {
         this.bancoDeAlunos = new ArrayList<Aluno>();
     }
 
@@ -34,7 +34,7 @@ public class RepositorioAluno {
         return false;
     }
 
-    public boolean alterar(Aluno alunoAlterado) {
+    public boolean alterarAluno(Aluno alunoAlterado) {
         int posicao = buscarPosicao(alunoAlterado.getId());
 
         if(posicao != -1) {
@@ -45,7 +45,7 @@ public class RepositorioAluno {
         return false;
     }
 
-    public boolean excluir(int idAluno){
+    public boolean excluirAluno(int idAluno){
         int posicao = buscarPosicao(idAluno);
 
         if (posicao != -1) {
@@ -56,7 +56,7 @@ public class RepositorioAluno {
     }
 
     public ArrayList<Aluno> listarTodos() {
-        return bancoDeAlunos;
+        return new ArrayList<Aluno>(bancoDeAlunos);
     }
 
     public ArrayList<Aluno> listarPorEscola(int idEscola){

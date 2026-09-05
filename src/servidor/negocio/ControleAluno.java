@@ -42,7 +42,7 @@ public class ControleAluno {
 
             aluno.setClassificacao(Classificacao.gerarClassificacao(aluno.getImc()));
 
-            return repositorio.alterar(aluno);
+            return repositorio.alterarAluno(aluno);
         }
 
         return false;
@@ -53,7 +53,7 @@ public class ControleAluno {
             return false;
         }
 
-        return repositorio.excluir(idAluno);
+        return repositorio.excluirAluno(idAluno);
     }
 
     public ArrayList<Aluno> listarAlunos() {

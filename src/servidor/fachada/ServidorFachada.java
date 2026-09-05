@@ -29,6 +29,10 @@ public class ServidorFachada {
         return controleAluno.alterarAluno(aluno);
     }
 
+    public void removerAluno(int id) {
+        controleAluno.excluirAluno(id);
+    }
+
     public ArrayList<Aluno> listarAlunos() {
         return controleAluno.listarAlunos();
     }
@@ -45,7 +49,4 @@ public class ServidorFachada {
         return controleAluno.listarFaixaDeRisco();
     }
 
-    public void removerAluno(int id) {
-        controleAluno.excluirAluno(id);
-    }
 }
