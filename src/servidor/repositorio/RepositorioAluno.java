@@ -8,6 +8,7 @@ public class RepositorioAluno {
 
     private static RepositorioAluno instancia;
     private ArrayList<Aluno> bancoDeAlunos;
+    private int id = 0;
 
     private RepositorioAluno() {
         this.bancoDeAlunos = new ArrayList<Aluno>();
@@ -22,7 +23,11 @@ public class RepositorioAluno {
 
     public boolean adicionarAluno(Aluno aluno) {
         if(aluno != null) {
+            aluno.setId(this.id);
+
             bancoDeAlunos.add(aluno);
+            this.id++;
+
             return true;
         }
 
@@ -30,7 +35,7 @@ public class RepositorioAluno {
     }
 
     public boolean alterar(Aluno alunoAlterado) {
-        int posicao = buscarAluno(alunoAlterado.getId());
+        int posicao = buscarPosicao(alunoAlterado.getId());
 
         if(posicao != -1) {
             bancoDeAlunos.set(posicao, alunoAlterado);
@@ -40,8 +45,8 @@ public class RepositorioAluno {
         return false;
     }
 
-    public boolean excluir(Aluno aluno){
-        int posicao = buscarAluno(aluno.getId());
+    public boolean excluir(int idAluno){
+        int posicao = buscarPosicao(idAluno);
 
         if (posicao != -1) {
             bancoDeAlunos.remove(posicao);
@@ -90,7 +95,7 @@ public class RepositorioAluno {
         return lista;
     }
 
-    public int buscarAluno(int idAluno) {
+    public int buscarPosicao(int idAluno) {
         for (Aluno a : bancoDeAlunos) {
             if (a.getId() == idAluno) {
                 return bancoDeAlunos.indexOf(a);

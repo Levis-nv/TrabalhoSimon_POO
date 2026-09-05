@@ -8,49 +8,85 @@ import java.util.ArrayList;
 
 public class ControleAluno {
     private RepositorioAluno repositorio;
+    private static ControleAluno instancia;
 
     public ControleAluno() {
         this.repositorio = RepositorioAluno.getInstancia();
     }
 
-    public void CadastrarAluno(Aluno aluno) throws Exception {
-        if (aluno.getPeso() <= 0 || aluno.getAltura() <= 0) {
-            throw new Exception("Peso e altura devem ser maiores que zero!");
+    public static ControleAluno getInstance() {
+        if(instancia == null) {
+            instancia = new ControleAluno();
         }
-        if (aluno.getIdade() < 0) {
-            throw new Exception("A idade não pode ser negativa!");
+
+        return instancia;
+    }
+
+    public boolean cadastrarAluno(Aluno aluno) {
+        if (aluno == null){
+            return false;
+        }
+
+        if (aluno.getPeso() <= 0 || aluno.getAltura() <= 0 || aluno.getIdade() < 0) {
+            return false;
         }
 
         // calculo imc
         double imc = aluno.getPeso() / (aluno.getAltura() * aluno.getAltura());
         aluno.setImc(imc);
 
-        // cklassif
-        if (imc < 18.5) {
-            aluno.setClassificacao(Classificacao.MAGREZA);
+        aluno.setClassificacao(Classificacao.gerarClassificacao(aluno.getImc()));
 
-        } else if (imc < 25) {
-            aluno.setClassificacao(Classificacao.NORMAL);
+        return repositorio.adicionarAluno(aluno);
+    }
 
-        } else if (imc < 30) {
-            aluno.setClassificacao(Classificacao.SOBREPESO);
-
-        } else if (imc < 40) {
-            aluno.setClassificacao(Classificacao.OBESIDADE);
+    public boolean alterarAluno(Aluno aluno) {
+        if (aluno == null) {
+            return false;
         }
 
-        repositorio.adicionarAluno(aluno);
+        if (aluno.getPeso() <= 0 || aluno.getAltura() <= 0 || aluno.getIdade() < 0) {
+            return false;
+        }
+
+        double imc = aluno.getPeso() / (aluno.getAltura() * aluno.getAltura());
+        aluno.setImc(imc);
+
+        aluno.setClassificacao(Classificacao.gerarClassificacao(aluno.getImc()));
+
+
+        return repositorio.alterar(aluno);
     }
 
     public ArrayList<Aluno> listarAlunos() {
         return repositorio.listarTodos();
     }
 
-    public Aluno buscarAluno(int id) {
-        return repositorio.buscarPorId(id);
+    public ArrayList<Aluno> listarPorEscola(int idEscola) {
+        if (idEscola < 0){
+            return null;
+        }
+
+        return repositorio.listarPorEscola(idEscola);
     }
 
-    public void removerAluno(int id) {
-        repositorio.remover(id);
+    public ArrayList<Aluno> listarPorCategoria(Classificacao categoria) {
+        if (categoria == null) {
+            return null;
+        }
+
+        return repositorio.listarPorCategoria(categoria);
+    }
+
+    public ArrayList<Aluno> listarFaixaDeRisco() {
+        return repositorio.listarFaixaDeRisco();
+    }
+
+    public boolean excluirAluno(int idAluno) {
+        if (idAluno < 0) {
+            return false;
+        }
+
+        return repositorio.excluir(idAluno);
     }
 }
