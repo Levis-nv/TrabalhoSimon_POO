@@ -23,39 +23,37 @@ public class ControleAluno {
     }
 
     public boolean cadastrarAluno(Aluno aluno) {
-        if (aluno == null){
-            return false;
+
+        if (validacao(aluno)) {
+            aluno.setImc(calcularIMC(aluno.getAltura(), aluno.getPeso()));
+
+            aluno.setClassificacao(Classificacao.gerarClassificacao(aluno.getImc()));
+
+            return repositorio.adicionarAluno(aluno);
         }
 
-        if (aluno.getPeso() <= 0 || aluno.getAltura() <= 0 || aluno.getIdade() < 0) {
-            return false;
-        }
-
-        // calculo imc
-        double imc = aluno.getPeso() / (aluno.getAltura() * aluno.getAltura());
-        aluno.setImc(imc);
-
-        aluno.setClassificacao(Classificacao.gerarClassificacao(aluno.getImc()));
-
-        return repositorio.adicionarAluno(aluno);
+        return false;
     }
 
     public boolean alterarAluno(Aluno aluno) {
-        if (aluno == null) {
+
+        if (validacao(aluno)) {
+            aluno.setImc(calcularIMC(aluno.getAltura(), aluno.getPeso()));
+
+            aluno.setClassificacao(Classificacao.gerarClassificacao(aluno.getImc()));
+
+            return repositorio.alterar(aluno);
+        }
+
+        return false;
+    }
+
+    public boolean excluirAluno(int idAluno) {
+        if (idAluno < 0) {
             return false;
         }
 
-        if (aluno.getPeso() <= 0 || aluno.getAltura() <= 0 || aluno.getIdade() < 0) {
-            return false;
-        }
-
-        double imc = aluno.getPeso() / (aluno.getAltura() * aluno.getAltura());
-        aluno.setImc(imc);
-
-        aluno.setClassificacao(Classificacao.gerarClassificacao(aluno.getImc()));
-
-
-        return repositorio.alterar(aluno);
+        return repositorio.excluir(idAluno);
     }
 
     public ArrayList<Aluno> listarAlunos() {
@@ -82,11 +80,20 @@ public class ControleAluno {
         return repositorio.listarFaixaDeRisco();
     }
 
-    public boolean excluirAluno(int idAluno) {
-        if (idAluno < 0) {
+    private boolean validacao(Aluno aluno) {
+        if (aluno == null){
             return false;
         }
 
-        return repositorio.excluir(idAluno);
+        if (repositorio.verificarAluno(aluno)){
+            return false;
+        }
+
+        return aluno.getEscola() != null && aluno.getAltura() > 0 && aluno.getPeso() > 0
+                && aluno.getSexo() != null;
+    }
+
+    private double calcularIMC(double altura, double peso){
+        return peso/(altura * altura);
     }
 }

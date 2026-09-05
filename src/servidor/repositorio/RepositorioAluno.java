@@ -8,7 +8,7 @@ public class RepositorioAluno {
 
     private static RepositorioAluno instancia;
     private ArrayList<Aluno> bancoDeAlunos;
-    private int id = 0;
+    private int id;
 
     private RepositorioAluno() {
         this.bancoDeAlunos = new ArrayList<Aluno>();
@@ -103,6 +103,16 @@ public class RepositorioAluno {
         }
 
         return -1;
+    }
+
+    public boolean verificarAluno(Aluno aluno){
+        for (Aluno a: bancoDeAlunos) {
+            if(a.getNome().equalsIgnoreCase(aluno.getNome())){
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
