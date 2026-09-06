@@ -2,5 +2,13 @@ package modelo.entidade;
 
 public enum Sexo {
     MASCULINO,
-    FEMININO
+    FEMININO;
+
+    public static Sexo selecionar(int cod) {
+        if (cod == 1) {
+            return MASCULINO;
+        }
+
+        return FEMININO;
+    }
 }

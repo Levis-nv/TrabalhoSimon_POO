@@ -73,8 +73,13 @@ public class ComunicacaoCliente {
         return (ArrayList<Aluno>) resposta.getDados();
     }
 
-    public ArrayList<Aluno> listarAlunoCategoria() throws IOException, ClassNotFoundException {
-        Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.LISTAR_CATEGORIA);
+    public ArrayList<Aluno> listarAlunoCategoria(Classificacao categoria) throws IOException, ClassNotFoundException {
+
+        if (categoria == null) {
+            return null;
+        }
+
+        Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.LISTAR_CATEGORIA, categoria);
 
         output.writeObject(mensagem);
         output.flush();
@@ -84,6 +89,10 @@ public class ComunicacaoCliente {
     }
 
     public ArrayList<Aluno> listarAlunoEscola(int idEscola) throws IOException, ClassNotFoundException {
+        if (idEscola < 0) {
+            return null;
+        }
+
         Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.LISTAR_ESCOLA, idEscola);
 
         output.writeObject(mensagem);

@@ -1,8 +1,8 @@
 package cliente.ui;
 
-import simon.modelo.entidade.Aluno;
-import simon.modelo.entidade.Sexo;
-import simon.cliente.fachada.*;
+import modelo.entidade.Aluno;
+import modelo.entidade.Sexo;
+import cliente.fachada.*;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -38,11 +38,13 @@ public class UIAluno {
         System.out.println("Selecione o sexo do aluno");
         System.out.println("1- Masculino   |   2- Feminino");
         int cod = scan.nextInt();
+
         while (cod < 1 || cod > 2) {
             System.out.println("Escreva um valor válido");
             cod = scan.nextInt();
         }
-        Sexo sexo = Sexo.selecionarSexo(cod);
+
+        Sexo sexo = Sexo.selecionar(cod);
 
         System.out.print("Escreva a altura do aluno: ");
         double altura = scan.nextDouble();
@@ -50,7 +52,8 @@ public class UIAluno {
         System.out.println("Escreva o peso do aluno");
         double peso = scan.nextDouble();
 
-        Aluno aluno = Aluno.getInstance(nome, data, sexo, altura, peso);
+        Aluno aluno = new Aluno(nome, data, sexo, altura, peso);
+
 
 
     }

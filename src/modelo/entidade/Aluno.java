@@ -1,12 +1,14 @@
 package modelo.entidade;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 
 public class Aluno implements Serializable {
     private int id;
     private String nome;
-    private int idade;
+    private LocalDate dtNasc;
     private Sexo sexo;
     private double peso;
     private double altura;
@@ -15,10 +17,10 @@ public class Aluno implements Serializable {
     private Classificacao classificacao;
     private ArrayList<Avaliacao> avaliacao;
 
-    public Aluno(String nome, int idade, Sexo sexo, double peso, double altura){
-        if(nome != null && !nome.isEmpty() && idade > 0 && sexo != null && peso > 0 && altura > 0){
+    public Aluno(String nome, LocalDate dtNasc, Sexo sexo, double peso, double altura){
+        if(nome != null && !nome.isEmpty() && dtNasc != null && sexo != null && peso > 0 && altura > 0){
             this.nome = nome;
-            this.idade = idade;
+            this.dtNasc = dtNasc;
             this.sexo = sexo;
             this.peso = peso;
             this.altura = altura;
@@ -47,13 +49,7 @@ public class Aluno implements Serializable {
     }
 
     public int getIdade() {
-        return this.idade;
-    }
-
-    public void setIdade(int idade) {
-        if (idade > 0) {
-            this.idade = idade;
-        }
+        return Period.between(dtNasc, LocalDate.now()).getYears();
     }
 
     public Sexo getSexo() {
