@@ -6,6 +6,7 @@ import servidor.repositorio.RepositorioEscola;
 import java.util.ArrayList;
 
 public class ControleEscola {
+
     private RepositorioEscola repositorio;
     private static ControleEscola instancia;
 

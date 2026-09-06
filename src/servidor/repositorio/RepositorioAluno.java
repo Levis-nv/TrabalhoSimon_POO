@@ -7,11 +7,11 @@ import java.util.ArrayList;
 public class RepositorioAluno {
 
     private static RepositorioAluno instancia;
-    private ArrayList<Aluno> bancoDeAlunos;
+    private final ArrayList<Aluno> bancoDeAlunos;
     private int id;
 
     public RepositorioAluno() {
-        this.bancoDeAlunos = new ArrayList<Aluno>();
+        this.bancoDeAlunos = new ArrayList<>();
     }
 
     public static RepositorioAluno getInstancia() {
@@ -56,11 +56,11 @@ public class RepositorioAluno {
     }
 
     public ArrayList<Aluno> listarTodos() {
-        return new ArrayList<Aluno>(bancoDeAlunos);
+        return new ArrayList<>(bancoDeAlunos);
     }
 
     public ArrayList<Aluno> listarPorEscola(int idEscola){
-        ArrayList<Aluno> lista = new ArrayList<Aluno>();
+        ArrayList<Aluno> lista = new ArrayList<>();
 
         for (Aluno a: bancoDeAlunos){
             if (a.getEscola().getId() == idEscola){
@@ -72,7 +72,7 @@ public class RepositorioAluno {
     }
 
     public ArrayList<Aluno> listarPorCategoria(Classificacao categoria){
-        ArrayList<Aluno> lista = new ArrayList<Aluno>();
+        ArrayList<Aluno> lista = new ArrayList<>();
 
         for (Aluno a : bancoDeAlunos) {
             if (a.getClassificacao() == categoria){
@@ -84,7 +84,7 @@ public class RepositorioAluno {
     }
 
     public ArrayList<Aluno> listarFaixaDeRisco(){
-        ArrayList<Aluno> lista = new ArrayList<Aluno>();
+        ArrayList<Aluno> lista = new ArrayList<>();
 
         for (Aluno a : bancoDeAlunos) {
             if (a.getImc() < 18 || a.getImc() >= 30){

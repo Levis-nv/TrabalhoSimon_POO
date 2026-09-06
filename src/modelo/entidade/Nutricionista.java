@@ -3,6 +3,7 @@ package modelo.entidade;
 import java.io.Serializable;
 
 public class Nutricionista implements Serializable {
+    private int id;
     private String nome;
     private String nomeUsuario;
     private String senha;
@@ -26,5 +27,15 @@ public class Nutricionista implements Serializable {
 
     public String getSenha() {
         return senha;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        if (id >= 0) {
+            this.id = id;
+        }
     }
 }

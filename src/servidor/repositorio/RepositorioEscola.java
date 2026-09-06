@@ -1,17 +1,16 @@
 package servidor.repositorio;
 
-import modelo.entidade.Aluno;
 import modelo.entidade.Escola;
 import java.util.ArrayList;
 
 public class RepositorioEscola {
 
     private static RepositorioEscola instancia;
-    private ArrayList<Escola> bancoDeEscola;
+    private final ArrayList<Escola> bancoDeEscola;
     private int id;
 
-    private RepositorioEscola(){
-        this.bancoDeEscola = new ArrayList<Escola>();
+    public RepositorioEscola(){
+        this.bancoDeEscola = new ArrayList<>();
     }
 
     public static RepositorioEscola getInstancia() {
@@ -56,7 +55,7 @@ public class RepositorioEscola {
     }
 
     public ArrayList<Escola> listarTodos() {
-        return new ArrayList<Escola>(bancoDeEscola);
+        return new ArrayList<>(bancoDeEscola);
     }
 
     public int buscarPosicao(int idEscola) {
