@@ -8,13 +8,13 @@ public enum Classificacao {
     OBESIDADE_GRAVE;
 
     public static Classificacao gerarClassificacao(double imc){
-        if (imc >= 25) {
+        if (imc < 25) {
             return MAGREZA;
 
-        } else if (imc >= 30) {
+        } else if (imc < 30) {
             return NORMAL;
 
-        } else if (imc >= 40) {
+        } else if (imc < 40) {
             return SOBREPESO;
 
         } else {
