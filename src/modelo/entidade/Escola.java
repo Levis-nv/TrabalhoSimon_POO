@@ -25,4 +25,10 @@ public class Escola implements Serializable {
     public String getNome() {
         return nome;
     }
+
+    public void setNome(String nome) {
+        if (nome != null && !nome.isEmpty()) {
+            this.nome = nome;
+        }
+    }
 }

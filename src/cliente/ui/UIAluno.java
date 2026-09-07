@@ -276,11 +276,9 @@ public class UIAluno {
 
         } catch (IOException e) {
             System.out.println("Erro na comunicação com o servidor");
-            return;
 
         } catch (ClassNotFoundException e) {
             System.out.println("Erro ao receber a resposta do servidor");
-            return;
 
         }
 
