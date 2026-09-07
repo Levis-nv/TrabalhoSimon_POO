@@ -12,6 +12,10 @@ public class Escola implements Serializable {
         }
     }
 
+    public Escola() {
+
+    }
+
     public int getId() {
         return id;
     }

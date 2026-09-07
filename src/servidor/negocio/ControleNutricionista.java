@@ -1,6 +1,5 @@
 package servidor.negocio;
 
-import modelo.entidade.Escola;
 import modelo.entidade.Nutricionista;
 import servidor.repositorio.RepositorioNutricionista;
 
@@ -25,7 +24,6 @@ public class ControleNutricionista {
 
     public boolean cadastrarNutricionista(Nutricionista nutricionista) {
         if (validacao(nutricionista)) {
-
             return repositorio.adicionarNuricionista(nutricionista);
         }
 
@@ -33,16 +31,14 @@ public class ControleNutricionista {
     }
 
     public boolean alterarNutricionista(Nutricionista nutricionista) {
-
-        if (validacao(nutricionista)) {
-
+        if (nutricionista != null) {
             return repositorio.alterarNutricionista(nutricionista);
         }
 
         return false;
     }
 
-    public boolean excluirEscola(int idNutricionista) {
+    public boolean excluirNutricionista(int idNutricionista) {
         if (idNutricionista < 0) {
             return false;
         }
@@ -58,7 +54,6 @@ public class ControleNutricionista {
         if (nutricionista == null){
             return false;
         }
-
-        return repositorio.verificarNutricionista(nutricionista);
+        return !repositorio.verificarNutricionista(nutricionista);
     }
 }

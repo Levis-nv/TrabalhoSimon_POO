@@ -3,6 +3,8 @@ package servidor.fachada;
 import modelo.entidade.Aluno;
 import modelo.entidade.Escola;
 import modelo.entidade.Classificacao;
+import modelo.entidade.Nutricionista;
+import servidor.negocio.ControleNutricionista;
 
 import servidor.negocio.ControleAluno;
 import servidor.negocio.ControleEscola;
@@ -13,10 +15,12 @@ public class ServidorFachada {
     private ControleAluno controleAluno;
     private ControleEscola controleEscola;
     private static ServidorFachada instancia;
+    private ControleNutricionista controleNutricionista;
 
     private ServidorFachada() {
         this.controleAluno = ControleAluno.getInstance();
         this.controleEscola = ControleEscola.getInstance();
+        this.controleNutricionista = ControleNutricionista.getInstance();
     }
 
     public static ServidorFachada getInstancia() {
@@ -75,4 +79,19 @@ public class ServidorFachada {
     }
 
     // NUTRICIONISTA
+    public boolean cadastrarNutricionista(Nutricionista nutricionista) {
+        return controleNutricionista.cadastrarNutricionista(nutricionista);
+    }
+
+    public boolean alterarNutricionista(Nutricionista nutricionista) {
+        return controleNutricionista.alterarNutricionista(nutricionista);
+    }
+
+    public boolean removerNutricionista(Nutricionista nutricionista) {
+        return controleNutricionista.excluirNutricionista(nutricionista.getId());
+    }
+
+    public ArrayList<Nutricionista> listarNutricionista() {
+        return controleNutricionista.listarNutricionista();
+    }
 }

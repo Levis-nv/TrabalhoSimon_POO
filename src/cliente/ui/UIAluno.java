@@ -4,7 +4,7 @@ import modelo.entidade.Aluno;
 import modelo.entidade.Classificacao;
 import modelo.entidade.Escola;
 import modelo.entidade.Sexo;
-import cliente.fachada.FachadaCliente;
+import cliente.fachada.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -22,192 +22,415 @@ public class UIAluno {
     }
 
     public void exibir() {
+
         int op;
+
         do {
-            System.out.println("\n--- MENU ALUNOS ---");
+            System.out.println("\n--- ALUNOS ---");
             System.out.println("1 - Cadastrar aluno");
             System.out.println("2 - Alterar aluno");
             System.out.println("3 - Excluir aluno");
-            System.out.println("4 - Listar todos os alunos");
-            System.out.println("5 - Listar alunos por categoria (IMC)");
+            System.out.println("4 - Listar alunos");
+            System.out.println("5 - Listar alunos por categoria");
             System.out.println("6 - Listar alunos por escola");
             System.out.println("7 - Listar alunos na faixa de risco");
             System.out.println("0 - Voltar");
-            System.out.print("Opção: ");
 
             op = scan.nextInt();
-            scan.nextLine(); // Limpar buffer
 
             switch (op) {
-                case 1: add(); break;
-                case 2: alterar(); break;
-                case 3: excluir(); break;
-                case 4: listarTodos(); break;
-                case 5: listarPorCategoria(); break;
-                case 6: listarPorEscola(); break;
-                case 7: listarPorRisco(); break;
-                case 0: System.out.println("Voltando..."); break;
-                default: System.out.println("Opção inválida.");
+
+                case 1:
+                    add();
+                    break;
+
+                case 2:
+                    alterar();
+                    break;
+
+                case 3:
+                    excluir();
+                    break;
+
+                case 4:
+                    try {
+                        listarAluno(fachada.listarAluno());
+                    } catch (IOException e) {
+                        System.out.println("Erro na comunicação com o servidor");
+
+                    } catch (ClassNotFoundException e) {
+                        System.out.println("Erro ao receber a resposta do servidor");
+
+                    }
+                    break;
+
+                case 5:
+                    try {
+                        listarAluno(fachada.listarAlunoCategoria(listarAlunoPorCategoria()));
+                    } catch (IOException e) {
+                        System.out.println("Erro na comunicação com o servidor");
+
+                    } catch (ClassNotFoundException e) {
+                        System.out.println("Erro ao receber a resposta do servidor");
+
+                    }
+                    break;
+
+                case 6:
+                    try {
+                        listarAluno(fachada.listarAlunoEscola(listarAlunoPorEscola()));
+                    } catch (IOException e) {
+                        System.out.println("Erro na comunicação com o servidor");
+
+                    } catch (ClassNotFoundException e) {
+                        System.out.println("Erro ao receber a resposta do servidor");
+
+                    }
+                    break;
+
+                case 7:
+                    try {
+                        listarAluno(fachada.listarAlunoRisco());
+                    } catch (IOException e) {
+                        System.out.println("Erro na comunicação com o servidor");
+
+                    } catch (ClassNotFoundException e) {
+                        System.out.println("Erro ao receber a resposta do servidor");
+
+                    }
+                    break;
+
+                case 0:
+                    System.out.println("Voltando...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida.");
             }
+
         } while (op != 0);
     }
 
-    private void add() {
-        try {
-            System.out.print("Nome do aluno: ");
-            String nome = scan.nextLine();
+    public void add(){
+        System.out.println("Escreva o nome do aluno:");
+        String nome = scan.next();
 
-            System.out.println("Data de nascimento:");
-            System.out.print("Dia: "); int dia = scan.nextInt();
-            System.out.print("Mês: "); int mes = scan.nextInt();
-            System.out.print("Ano: "); int ano = scan.nextInt();
-            LocalDate data = LocalDate.of(ano, mes, dia);
+        System.out.println("Escreva a data de nascimento do aluno");
+        System.out.print("Dia: ");
+        int dia = scan.nextInt();
 
-            System.out.println("Sexo (1- Masculino | 2- Feminino): ");
-            int codSexo = scan.nextInt();
-            Sexo sexo = Sexo.selecionar(codSexo);
+        System.out.print("Mês: ");
+        int mes = scan.nextInt();
 
-            System.out.print("Altura (ex: 1,70): ");
-            double altura = scan.nextDouble();
+        System.out.println("Ano");
+        int ano = scan.nextInt();
 
-            System.out.print("Peso (ex: 60,5): ");
-            double peso = scan.nextDouble();
+        LocalDate data = LocalDate.of(ano, mes, dia);
 
-            listarEscolasDisponiveis();
-            System.out.print("Digite o código da escola do aluno: ");
-            int idEscola = scan.nextInt();
-            Escola escola = fachada.buscarEscola(idEscola);
+        System.out.println("Selecione o sexo do aluno");
+        System.out.println("1- Masculino   |   2- Feminino");
+        int cod = scan.nextInt();
 
-            if (escola == null) {
-                System.out.println("Escola não encontrada. Cancelando cadastro.");
-                return;
-            }
-
-            Aluno aluno = new Aluno(nome, data, sexo, altura, peso, escola);
-            System.out.println(fachada.cadastrarAluno(aluno));
-
-        } catch (Exception e) {
-            System.out.println("Erro ao cadastrar aluno: " + e.getMessage());
+        while (cod < 1 || cod > 2) {
+            System.out.println("Escreva um valor válido");
+            cod = scan.nextInt();
         }
+
+        Sexo sexo = Sexo.selecionar(cod);
+
+        System.out.print("Escreva a altura do aluno: ");
+        double altura = scan.nextDouble();
+
+        System.out.println("Escreva o peso do aluno");
+        double peso = scan.nextDouble();
+
+        Escola escola = null;
+
+        try{
+            listarEscola(fachada.listarEscola());
+
+            while (escola == null) {
+                System.out.println("Digite o código da escola");
+                int codigo = scan.nextInt();
+                escola = fachada.buscarEscola(codigo);
+                if (escola == null) {
+                    System.out.println("A escola não foi encontrada");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro na comunicação com o servidor");
+            return;
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erro ao receber a resposta do servidor");
+            return;
+
+        }
+
+        Aluno aluno = new Aluno(nome, data, sexo, altura, peso, escola);
+
+        try {
+            String resposta = fachada.cadastrarAluno(aluno);
+
+            System.out.println(resposta);
+        } catch (IOException e) {
+            System.out.println("Erro na comunicação com o servidor");
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erro ao receber a resposta do servidor");
+
+        }
+
     }
 
-    private void alterar() {
+    public void alterar(){
         try {
-            listarTodos();
-            System.out.print("Digite o ID do aluno que deseja alterar: ");
-            int id = scan.nextInt();
-            scan.nextLine();
+            listarAluno(fachada.listarAluno());
+        } catch (IOException e) {
+            System.out.println("Erro na comunicação com o servidor");
+            return;
 
-            Aluno aluno = fachada.buscarAluno(id);
-            if (aluno == null) {
-                System.out.println("Aluno não encontrado.");
-                return;
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erro ao receber a resposta do servidor");
+            return;
+
+        }
+
+        Aluno alunoAlterado = null;
+        try {
+            while (alunoAlterado == null) {
+                System.out.println("Escolha um aluno");
+                int cod = scan.nextInt();
+                alunoAlterado = fachada.buscarAluno(cod);
+                if (alunoAlterado == null) {
+                    System.out.println("O aluno não foi encontrado!");
+                }
             }
+        } catch (IOException e) {
+            System.out.println("Erro na comunicação com o servidor");
+            return;
 
-            System.out.println("O que deseja alterar?");
-            System.out.println("1- Nome | 2- Escola | 3- Altura | 4- Peso");
-            int op = scan.nextInt();
-            scan.nextLine();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erro ao receber a resposta do servidor");
+            return;
 
+        }
+
+        int op;
+        System.out.println("Escolha o que você deseja alterar");
+        System.out.println("1- Nome do aluno");
+        System.out.println("2- Escola do aluno");
+        System.out.println("3- Altura do aluno");
+        System.out.println("4- Peso");
+
+        do {
+            op = scan.nextInt();
             switch (op) {
                 case 1:
-                    System.out.print("Novo nome: ");
-                    aluno.setNome(scan.nextLine());
+                    alunoAlterado.setNome(scan.next());
                     break;
+
                 case 2:
-                    listarEscolasDisponiveis();
-                    System.out.print("Novo ID de Escola: ");
-                    Escola esc = fachada.buscarEscola(scan.nextInt());
-                    if (esc != null) aluno.setEscola(esc);
+                    Escola escola = null;
+                    try{
+                        listarEscola(fachada.listarEscola());
+
+                        while (escola == null) {
+                            System.out.println("Digite o código da escola");
+                            int codigo = scan.nextInt();
+                            escola = fachada.buscarEscola(codigo);
+                            if (escola == null) {
+                                System.out.println("A escola não foi encontrada");
+                            }
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Erro na comunicação com o servidor");
+                        return;
+
+                    } catch (ClassNotFoundException e) {
+                        System.out.println("Erro ao receber a resposta do servidor");
+                        return;
+
+                    }
+
+                    alunoAlterado.setEscola(escola);
                     break;
+
                 case 3:
-                    System.out.print("Nova altura: ");
-                    aluno.setAltura(scan.nextDouble());
+                    alunoAlterado.setAltura(scan.nextInt());
                     break;
+
                 case 4:
-                    System.out.print("Novo peso: ");
-                    aluno.setPeso(scan.nextDouble());
+                    alunoAlterado.setPeso(scan.nextInt());
                     break;
+
+
+                default:
+                    System.out.println("Escreva um valor válido");
             }
+        } while (op < 1 || op > 4);
 
-            System.out.println(fachada.alterarAluno(aluno));
-        } catch (Exception e) {
-            System.out.println("Erro ao alterar: " + e.getMessage());
-        }
-    }
-
-    private void excluir() {
         try {
-            listarTodos();
-            System.out.print("Digite o ID do aluno a excluir: ");
-            int id = scan.nextInt();
-            System.out.println(fachada.excluirAluno(id));
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
+            String resposta = fachada.alterarAluno(alunoAlterado);
+            System.out.println(resposta);
+
+        } catch (IOException e) {
+            System.out.println("Erro na comunicação com o servidor");
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erro ao receber a resposta do servidor");
+
         }
+
+
     }
 
-    private void listarTodos() {
+    public void excluir(){
         try {
-            imprimirTabelaAlunos(fachada.listarAluno());
-        } catch (Exception e) {
-            System.out.println("Erro ao listar: " + e.getMessage());
-        }
-    }
-
-    private void listarPorCategoria() {
-        System.out.println("Categorias: 1- Magreza | 2- Normal | 3- Sobrepeso | 4- Obesidade");
-        int op = scan.nextInt();
-        Classificacao c = switch(op) {
-            case 1 -> Classificacao.MAGREZA;
-            case 2 -> Classificacao.NORMAL;
-            case 3 -> Classificacao.SOBREPESO;
-            case 4 -> Classificacao.OBESIDADE;
-            default -> Classificacao.NORMAL;
-        };
-        try {
-            imprimirTabelaAlunos(fachada.listarAlunoCategoria(c));
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }
-
-    private void listarPorEscola() {
-        try {
-            listarEscolasDisponiveis();
-            System.out.print("Digite o ID da Escola: ");
-            int id = scan.nextInt();
-            imprimirTabelaAlunos(fachada.listarAlunoEscola(id));
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }
-
-    private void listarPorRisco() {
-        try {
-            imprimirTabelaAlunos(fachada.listarAlunoRisco());
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }
-
-    private void listarEscolasDisponiveis() throws Exception {
-        System.out.println("Escolas disponíveis:");
-        for (Escola e : fachada.listarEscola()) {
-            System.out.println("ID: " + e.getId() + " - " + e.getNome());
-        }
-    }
-
-    private void imprimirTabelaAlunos(ArrayList<Aluno> arr) {
-        if (arr == null || arr.isEmpty()) {
-            System.out.println("Nenhum aluno encontrado.");
+            listarAluno(fachada.listarAluno());
+        } catch (IOException e) {
+            System.out.println("Erro na comunicação com o servidor");
             return;
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erro ao receber a resposta do servidor");
+            return;
+
         }
-        System.out.printf("%-5s %-15s %-15s %-10s %-10s %-15s\n", "ID", "Nome", "Escola", "Altura", "Peso", "Classificação");
-        for (Aluno a : arr) {
-            String nomeEscola = a.getEscola() != null ? a.getEscola().getNome() : "Sem escola";
-            System.out.printf("%-5d %-15s %-15s %-10.2f %-10.2f %-15s\n",
-                    a.getId(), a.getNome(), nomeEscola, a.getAltura(), a.getPeso(), a.getClassificacao());
+
+        Aluno aluno = null;
+        try {
+            while (aluno == null) {
+                System.out.println("Escolha um aluno");
+                int cod = scan.nextInt();
+                aluno = fachada.buscarAluno(cod);
+                if (aluno == null) {
+                    System.out.println("O aluno não foi encontrado!");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro na comunicação com o servidor");
+            return;
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erro ao receber a resposta do servidor");
+            return;
+
         }
+
+        try {
+            String resposta = fachada.excluirAluno(aluno.getId());
+
+            System.out.println(resposta);
+        } catch (IOException e) {
+            System.out.println("Erro na comunicação com o servidor");
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erro ao receber a resposta do servidor");
+
+        }
+    }
+
+    public void listarAluno(ArrayList<Aluno> arr){
+        System.out.printf("%-8s %-15s %-20s %-15s %-10s %-10s %-10s %-15s\n",
+                "Código", "Nome", "Escola", "Sexo","Altura", "Peso", "IMC", "Classificação");
+        for (Aluno a: arr) {
+            System.out.printf("%-8d %-15s %-20s %-15s %-6s %-6s %-10s %-15s\n", a.getId(), a.getNome(), a.getEscola().getNome(),
+            a.getNome() ,a.getAltura(), a.getPeso(), a.getImc(), a.getClassificacao());
+        }
+    }
+
+    public Classificacao listarAlunoPorCategoria(){
+        System.out.println("Escolha a categoria");
+        System.out.println("1- Magreza");
+        System.out.println("2- Normal");
+        System.out.println("3- Sobrepeso");
+        System.out.println("4- Obesidade");
+        System.out.println("5- Obesidade grave");
+
+        int op;
+
+        do {
+            op = scan.nextInt();
+            switch (op) {
+                case 1:
+                    return Classificacao.MAGREZA;
+
+                case 2:
+                    return Classificacao.NORMAL;
+
+                case 3:
+                    return Classificacao.SOBREPESO;
+
+
+                case 4:
+                    return Classificacao.OBESIDADE;
+
+
+                case 5:
+                    return Classificacao.OBESIDADE_GRAVE;
+
+
+
+                default:
+                    System.out.println("Escreva um valor válido");
+            }
+        } while (true);
+    }
+
+    public int listarAlunoPorEscola(){
+        Escola escola = null;
+        try{
+            listarEscola(fachada.listarEscola());
+
+            while (escola == null) {
+                System.out.println("Digite o código da escola");
+                int codigo = scan.nextInt();
+                escola = fachada.buscarEscola(codigo);
+                if (escola == null) {
+                    System.out.println("A escola não foi encontrada");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro na comunicação com o servidor");
+            return -1;
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erro ao receber a resposta do servidor");
+            return -1;
+
+        }
+
+        try{
+            listarEscola(fachada.listarEscola());
+
+            while (escola == null) {
+                System.out.println("Digite o código da escola");
+                int codigo = scan.nextInt();
+                escola = fachada.buscarEscola(codigo);
+                if (escola == null) {
+                    System.out.println("A escola não foi encontrada");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro na comunicação com o servidor");
+            return -1;
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erro ao receber a resposta do servidor");
+            return -1;
+
+        }
+
+        return escola.getId();
+    }
+
+    public void listarEscola(ArrayList<Escola> arr){
+        System.out.printf("%-8s %-15s \n",
+                "Código", "Nome");
+        for (Escola e: arr) {
+            System.out.printf("%-8d %-15s \n", e.getId(), e.getNome());
+        }
+
     }
 }

@@ -29,6 +29,10 @@ public class Aluno implements Serializable {
         }
     }
 
+    public Aluno() {
+        //@kauagames cirei essse construtor vazuo para nao mexer nos construtores principais é passar valores coringa temporários na hora de instanciar,
+    }
+
     public int getId() {
         return this.id;
     }
