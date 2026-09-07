@@ -21,14 +21,29 @@ public class Nutricionista implements Serializable {
         return nome;
     }
 
+    public void setNome(String nome) {
+        if (nome != null && !nome.isEmpty()) {
+            this.nome = nome;
+        }
+    }
     public String getNomeUsuario() {
         return nomeUsuario;
     }
 
+    public void setNomeUsuario(String nomeUsuario) {
+        if (nomeUsuario != null && !nomeUsuario.isEmpty()) {
+        this.nomeUsuario = nomeUsuario;
+    }
+    }
     public String getSenha() {
         return senha;
     }
 
+    public void setSenha(String senha) {
+        if (senha != null && !senha.isEmpty()) {
+            this.senha = senha;
+        }
+    }
     public int getId() {
         return id;
     }
