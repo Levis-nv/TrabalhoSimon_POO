@@ -7,5 +7,6 @@ public enum Operacao {
     LISTAR,
     LISTAR_CATEGORIA,
     LISTAR_ESCOLA,
-    LISTAR_RISCO
+    LISTAR_RISCO,
+    BUSCAR
 }

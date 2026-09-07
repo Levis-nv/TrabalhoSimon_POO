@@ -17,8 +17,9 @@ public class Aluno implements Serializable {
     private Classificacao classificacao;
     private ArrayList<Avaliacao> avaliacao;
 
-    public Aluno(String nome, LocalDate dtNasc, Sexo sexo, double peso, double altura){
-        if(nome != null && !nome.isEmpty() && dtNasc != null && sexo != null && peso > 0 && altura > 0){
+    public Aluno(String nome, LocalDate dtNasc, Sexo sexo, double peso, double altura, Escola escola){
+        if(nome != null && !nome.isEmpty() && dtNasc != null && sexo != null
+                && peso > 0 && altura > 0 && escola != null){
             this.nome = nome;
             this.dtNasc = dtNasc;
             this.sexo = sexo;

@@ -33,6 +33,8 @@ public class ComunicacaoCliente {
         return instancia;
     }
 
+    // ALUNO
+
     public String cadastrarAluno(Aluno aluno) throws IOException, ClassNotFoundException {
         Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.CADASTRAR, aluno);
 
@@ -112,6 +114,18 @@ public class ComunicacaoCliente {
         return (ArrayList<Aluno>) resposta.getDados();
     }
 
+    public Aluno buscarAluno(int codigo) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.BUSCAR, codigo);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (Aluno) resposta.getDados();
+    }
+
+    // ESCOLA
+
     public String cadastrarEscola(Escola escola) throws IOException, ClassNotFoundException {
         Mensagem mensagem = new Mensagem(Entidade.ESCOLA, Operacao.CADASTRAR, escola);
 
@@ -151,4 +165,18 @@ public class ComunicacaoCliente {
         Mensagem resposta = (Mensagem) input.readObject();
         return (ArrayList<Escola>) resposta.getDados();
     }
+
+    public Escola buscarEscola(int codigo) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.ESCOLA, Operacao.BUSCAR, codigo);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (Escola) resposta.getDados();
+    }
+
+    //NUTRICIONISTA
+
+
 }

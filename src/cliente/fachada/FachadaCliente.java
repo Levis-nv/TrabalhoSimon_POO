@@ -11,7 +11,7 @@ public class FachadaCliente {
     private ComunicacaoCliente comunicacao;
     private static FachadaCliente instancia;
 
-    public FachadaCliente(ComunicacaoCliente comunicacao) {
+    private FachadaCliente(ComunicacaoCliente comunicacao) {
         this.comunicacao = comunicacao;
     }
 
@@ -51,6 +51,10 @@ public class FachadaCliente {
         return comunicacao.listarAlunoRisco();
     }
 
+    public Aluno buscarAluno(int codigo) throws IOException, ClassNotFoundException {
+        return comunicacao.buscarAluno(codigo);
+    }
+
     // ESCOLA
 
     public String cadastrarEscola(Escola escola) throws IOException, ClassNotFoundException {
@@ -67,5 +71,9 @@ public class FachadaCliente {
 
     public ArrayList<Escola> listarEscola()  throws IOException, ClassNotFoundException {
         return comunicacao.listarEscola();
+    }
+
+    public Escola buscarEscola(int codigo) throws IOException, ClassNotFoundException {
+        return comunicacao.buscarEscola(codigo);
     }
 }
