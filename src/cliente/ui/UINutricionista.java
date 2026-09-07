@@ -1,10 +1,8 @@
 package cliente.ui;
 
 import cliente.fachada.FachadaCliente;
-import modelo.entidade.Escola;
 import modelo.entidade.Nutricionista;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,205 +16,110 @@ public class UINutricionista {
     }
 
     public void exibir() {
-
         int op;
-
         do {
-            System.out.println("\n--- Nutricionista ---");
-            System.out.println("1 - Alterar escola");
-            System.out.println("2 - Excluir escola");
-            System.out.println("3 - Listar escolas");
+            System.out.println("\n--- MENU NUTRICIONISTA ---");
+            System.out.println("1 - Cadastrar Nutricionista");
+            System.out.println("2 - Alterar Nutricionista");
+            System.out.println("3 - Excluir Nutricionista");
+            System.out.println("4 - Listar Nutricionistas");
             System.out.println("0 - Voltar");
+            System.out.print("Opção: ");
 
             op = scan.nextInt();
+            scan.nextLine(); // limpa
 
             switch (op) {
-
-                case 1:
-                    alterar();
-                    break;
-
-                case 2:
-                    excluir();
-                    break;
-
-                case 3:
-                    try {
-                        listarNutricionista(fachada.listarNutricionista());
-                    } catch (IOException e) {
-                        System.out.println("Erro na comunicação com o servidor");
-
-                    } catch (ClassNotFoundException e) {
-                        System.out.println("Erro ao receber a resposta do servidor");
-
-                    }
-                    break;
-
-                case 0:
-                    System.out.println("Voltando...");
-                    break;
-
-                default:
-                    System.out.println("Opção inválida.");
+                case 1: add(); break;
+                case 2: alterar(); break;
+                case 3: excluir(); break;
+                case 4: listarTodos(); break;
+                case 0: System.out.println("Voltando..."); break;
+                default: System.out.println("Opção inválida.");
             }
-
         } while (op != 0);
     }
 
-    public void add(){
-        System.out.println("Escreva o seu nome");
+    private void add() {
+        System.out.print("Nome: ");
         String nome = scan.nextLine();
 
-        System.out.println("Escreva o seu nome de usuário");
-        String nomeUsuario = scan.nextLine();
+        System.out.print("Nome de Usuário (Login): ");
+        String usuario = scan.nextLine();
 
-        System.out.println("Escreva sua senha");
+        System.out.print("Senha: ");
         String senha = scan.nextLine();
 
-        Nutricionista nutricionista = new Nutricionista(nome, nomeUsuario, senha);
-
         try {
-            String resposta = fachada.cadastrarNutricionista(nutricionista);
-
-            System.out.println(resposta);
-        } catch (IOException e) {
-            System.out.println("Erro na comunicação com o servidor");
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("Erro ao receber a resposta do servidor");
-
+            Nutricionista n = new Nutricionista(nome, usuario, senha);
+            System.out.println(fachada.cadastrarNutricionista(n));
+        } catch (Exception e) {
+            System.out.println("Erro: " + e.getMessage());
         }
-
     }
 
-    public void alterar(){
+    private void alterar() {
+        listarTodos();
+        System.out.print("ID do Nutricionista para alterar: ");
+        int id = scan.nextInt();
+        scan.nextLine();
+
         try {
-            listarNutricionista(fachada.listarNutricionista());
-        } catch (IOException e) {
-            System.out.println("Erro na comunicação com o servidor");
-            return;
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("Erro ao receber a resposta do servidor");
-            return;
-
-        }
-
-        Nutricionista nutricionistaAlterado = null;
-        try {
-            while (nutricionistaAlterado == null) {
-                System.out.println("Escolha um nutricionista");
-                int cod = scan.nextInt();
-                nutricionistaAlterado = fachada.buscarNutricionista(cod);
-                if (nutricionistaAlterado == null) {
-                    System.out.println("O nutricionista não foi encontrado!");
-                }
+            Nutricionista n = fachada.buscarNutricionista(id);
+            if (n == null) {
+                System.out.println("Nutricionista não encontrado!");
+                return;
             }
-        } catch (IOException e) {
-            System.out.println("Erro na comunicação com o servidor");
-            return;
 
-        } catch (ClassNotFoundException e) {
-            System.out.println("Erro ao receber a resposta do servidor");
-            return;
-
-        }
-
-        System.out.println("Escolha o que você deseja alterar");
-        System.out.println("1- Nome");
-        System.out.println("2- Nome de usuário");
-        System.out.println("3- Senha");
-
-        int op;
-        do {
-            op = scan.nextInt();
+            System.out.println("1- Alterar Nome | 2- Alterar Usuário | 3- Alterar Senha");
+            int op = scan.nextInt();
             scan.nextLine();
-            switch (op) {
+
+            switch(op) {
                 case 1:
-                    System.out.println("Escreva o nome");
-                    nutricionistaAlterado.setNome(scan.nextLine());
+                    System.out.print("Novo Nome: ");
+                    n.setNome(scan.nextLine());
                     break;
-
                 case 2:
-                    System.out.println("Escreva o nome de usuário");
-                    nutricionistaAlterado.setNomeUsuario(scan.nextLine());
+                    System.out.print("Novo Usuário: ");
+                    n.setNomeUsuario(scan.nextLine());
                     break;
-
                 case 3:
-                    System.out.println("Escreva a senha");
-                    nutricionistaAlterado.setSenha(scan.nextLine());
+                    System.out.print("Nova Senha: ");
+                    n.setSenha(scan.nextLine());
                     break;
-
-                default:
-                    System.out.println("Escreva um valor válido");
             }
-        } while (op < 1 || op > 4);
 
-        try {
-            String resposta = fachada.alterarNutricionista(nutricionistaAlterado);
-            System.out.println(resposta);
-
-        } catch (IOException e) {
-            System.out.println("Erro na comunicação com o servidor");
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("Erro ao receber a resposta do servidor");
-
-        }
-
-    }
-
-    public void excluir(){
-        try {
-            listarNutricionista(fachada.listarNutricionista());
-        } catch (IOException e) {
-            System.out.println("Erro na comunicação com o servidor");
-            return;
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("Erro ao receber a resposta do servidor");
-            return;
-
-        }
-
-        Nutricionista nutricionista = null;
-        try {
-            while (nutricionista == null) {
-                System.out.println("Escolha um nutricionista");
-                int cod = scan.nextInt();
-                nutricionista = fachada.buscarNutricionista(cod);
-                if (nutricionista == null) {
-                    System.out.println("O nutricionista não foi encontrado!");
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Erro na comunicação com o servidor");
-            return;
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("Erro ao receber a resposta do servidor");
-            return;
-
-        }
-
-        try {
-            String resposta = fachada.excluirNutricionista(nutricionista.getId());
-
-            System.out.println(resposta);
-        } catch (IOException e) {
-            System.out.println("Erro na comunicação com o servidor");
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("Erro ao receber a resposta do servidor");
-
+            System.out.println(fachada.alterarNutricionista(n));
+        } catch (Exception e) {
+            System.out.println("Erro: " + e.getMessage());
         }
     }
 
-    public void listarNutricionista(ArrayList<Nutricionista> arr){
-        System.out.printf("%-8s %-15s %-15s\n",
-                "Código", "Nome", "Usuário");
-        for (Nutricionista n: arr) {
-            System.out.printf("%-8d %-15s %-15s\n", n.getId(), n.getNome());
+    private void excluir() {
+        listarTodos();
+        System.out.print("ID do Nutricionista para excluir: ");
+        int id = scan.nextInt();
+        try {
+            System.out.println(fachada.excluirNutricionista(id));
+        } catch (Exception e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
+    private void listarTodos() {
+        try {
+            ArrayList<Nutricionista> arr = fachada.listarNutricionista();
+            if(arr == null || arr.isEmpty()) {
+                System.out.println("Nenhum nutricionista cadastrado.");
+                return;
+            }
+            System.out.printf("%-5s %-20s %-15s\n", "ID", "Nome", "Usuário");
+            for (Nutricionista n : arr) {
+                System.out.printf("%-5d %-20s %-15s\n", n.getId(), n.getNome(), n.getNomeUsuario());
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao listar: " + e.getMessage());
         }
     }
 }
