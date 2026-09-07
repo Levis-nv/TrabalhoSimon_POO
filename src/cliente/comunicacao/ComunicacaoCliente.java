@@ -178,5 +178,53 @@ public class ComunicacaoCliente {
 
     //NUTRICIONISTA
 
+    public String cadastrarNutricionista(Nutricionista nutricionista) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.NUTRICIONISTA, Operacao.CADASTRAR, nutricionista);
 
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (String) resposta.getDados();
+    }
+
+    public String alterarNutricionista(Nutricionista nutricionista) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.NUTRICIONISTA, Operacao.ALTERAR, nutricionista);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (String) resposta.getDados();
+    }
+
+    public String excluirNutricionista(int idNutricionista) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.NUTRICIONISTA, Operacao.EXCLUIR, idNutricionista);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (String) resposta.getDados();
+    }
+
+    public ArrayList<Nutricionista> listarNutricionista() throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.NUTRICIONISTA, Operacao.LISTAR);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (ArrayList<Nutricionista>) resposta.getDados();
+    }
+
+    public Nutricionista buscarNutricionista(int codigo) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.NUTRICIONISTA, Operacao.BUSCAR, codigo);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (Nutricionista) resposta.getDados();
+    }
 }

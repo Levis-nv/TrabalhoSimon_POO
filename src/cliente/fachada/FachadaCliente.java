@@ -76,4 +76,26 @@ public class FachadaCliente {
     public Escola buscarEscola(int codigo) throws IOException, ClassNotFoundException {
         return comunicacao.buscarEscola(codigo);
     }
+
+    // NUTRICIONISTA
+
+    public String cadastrarNutricionista(Nutricionista nutricionista) throws IOException, ClassNotFoundException {
+        return comunicacao.cadastrarNutricionista(nutricionista);
+    }
+
+    public String alterarNutricionista(Nutricionista nutricionista) throws IOException, ClassNotFoundException {
+        return comunicacao.alterarNutricionista(nutricionista);
+    }
+
+    public String excluirNutricionista(int idNutricionista) throws IOException, ClassNotFoundException {
+        return comunicacao.excluirNutricionista(idNutricionista);
+    }
+
+    public ArrayList<Nutricionista> listarNutricionista()  throws IOException, ClassNotFoundException {
+        return comunicacao.listarNutricionista();
+    }
+
+    public Nutricionista buscarNutricionista(int codigo) throws IOException, ClassNotFoundException {
+        return comunicacao.buscarNutricionista(codigo);
+    }
 }
