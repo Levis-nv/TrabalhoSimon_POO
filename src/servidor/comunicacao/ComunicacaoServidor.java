@@ -1,8 +1,6 @@
 package servidor.comunicacao;
 
-import modelo.comunicacao.Entidade;
-import modelo.comunicacao.Mensagem;
-import modelo.comunicacao.Operacao;
+import modelo.comunicacao.*;
 import modelo.entidade.Aluno;
 import modelo.entidade.Classificacao;
 import modelo.entidade.Escola;
@@ -66,40 +64,41 @@ public class ComunicacaoServidor {
     private Mensagem tratarAluno(Mensagem msg) {
         Operacao op = msg.getOperacao();
 
-        if (op == Operacao.CADASTRAR) {
-            Aluno aluno = (Aluno) msg.getDados();
-            boolean sucesso = fachada.cadastrarAluno(aluno);
-            return new Mensagem(msg.getEntidade(), op, sucesso ? "Cadastrado com sucesso" : "Erro ao cadastrar");
+        switch (msg.getOperacao()) {
+            case CADASTRAR:
+                if (fachada.cadastrarAluno((Aluno) msg.getDados())) {
+                    return new Mensagem(null, null, true);
+                } else {
+                    return new Mensagem(null, null, false);
+                }
 
-        } else if (op == Operacao.ALTERAR) {
-            Aluno aluno = (Aluno) msg.getDados();
-            boolean sucesso = fachada.alterarAluno(aluno);
-            return new Mensagem(msg.getEntidade(), op, sucesso ? "Alterado com sucesso" : "Erro ao alterar");
+            case ALTERAR:
+                if (fachada.alterarAluno((Aluno) msg.getDados())) {
+                    return new Mensagem(null, null, true);
+                } else {
+                    return new Mensagem(null, null, false);
+                }
 
-        } else if (op == Operacao.EXCLUIR) {
-            int idAluno = (int) msg.getDados();
-            Aluno aluno = new Aluno();
-            aluno.setId(idAluno);
-            boolean sucesso = fachada.removerAluno(aluno);
-            return new Mensagem(msg.getEntidade(), op, sucesso ? "Excluido com sucesso" : "Erro ao excluir");
+            case EXCLUIR:
+                if (fachada.removerAluno((Aluno) msg.getDados())) {
+                    return new Mensagem(null, null, true);
+                } else {
+                    return new Mensagem(null, null, false);
+                }
 
-        } else if (op == Operacao.LISTAR) {
-            ArrayList<Aluno> lista = fachada.listarAlunos();
-            return new Mensagem(msg.getEntidade(), op, lista);
+            case LISTAR_CATEGORIA:
+                return new Mensagem(null, null, fachada.listarPorCategoria((Classificacao) msg.getDados()));
 
-        } else if (op == Operacao.LISTAR_CATEGORIA) {
-            Classificacao categoria = (Classificacao) msg.getDados();
-            ArrayList<Aluno> lista = fachada.listarPorCategoria(categoria);
-            return new Mensagem(msg.getEntidade(), op, lista);
+            case LISTAR_ESCOLA:
+                return new Mensagem(null, null, fachada.listarPorEscola((int) msg.getDados()));
 
-        } else if (op == Operacao.LISTAR_ESCOLA) {
-            int idEscola = (int) msg.getDados();
-            ArrayList<Aluno> lista = fachada.listarPorEscola(idEscola);
-            return new Mensagem(msg.getEntidade(), op, lista);
+            case LISTAR_RISCO:
+                return new Mensagem(null, null, fachada.listarFaixaDeRisco());
 
-        } else if (op == Operacao.LISTAR_RISCO) {
-            ArrayList<Aluno> lista = fachada.listarFaixaDeRisco();
-            return new Mensagem(msg.getEntidade(), op, lista);
+            case BUSCAR:
+                return new Mensagem(null, null, fachada.);
+        }
+
 
         } else if (op == Operacao.BUSCAR) {
             return new Mensagem(msg.getEntidade(), op, "Buscar não implementado");

@@ -170,9 +170,12 @@ public class UIAluno {
         Aluno aluno = new Aluno(nome, data, sexo, altura, peso, escola);
 
         try {
-            String resposta = fachada.cadastrarAluno(aluno);
+            if (fachada.cadastrarAluno(aluno)){
+                System.out.println("Cadastro realizado com sucesso");
+            } else {
+                System.out.println("Erro ao realizar o cadastro");
+            }
 
-            System.out.println(resposta);
         } catch (IOException e) {
             System.out.println("Erro na comunicação com o servidor");
 
@@ -271,8 +274,11 @@ public class UIAluno {
         } while (op < 1 || op > 4);
 
         try {
-            String resposta = fachada.alterarAluno(alunoAlterado);
-            System.out.println(resposta);
+            if (fachada.alterarAluno(alunoAlterado)) {
+                System.out.println("Alteração realizada com sucesso");
+            } else {
+                System.out.println("Erro ao alterar");
+            }
 
         } catch (IOException e) {
             System.out.println("Erro na comunicação com o servidor");
@@ -319,9 +325,11 @@ public class UIAluno {
         }
 
         try {
-            String resposta = fachada.excluirAluno(aluno.getId());
-
-            System.out.println(resposta);
+            if (fachada.excluirAluno(aluno.getId())) {
+                System.out.println("Aluno excluido com sucesso");
+            } else {
+                System.out.println("Erro ao excluir");
+            }
         } catch (IOException e) {
             System.out.println("Erro na comunicação com o servidor");
 
@@ -362,10 +370,8 @@ public class UIAluno {
                 case 3:
                     return Classificacao.SOBREPESO;
 
-
                 case 4:
                     return Classificacao.OBESIDADE;
-
 
                 case 5:
                     return Classificacao.OBESIDADE_GRAVE;
@@ -380,27 +386,6 @@ public class UIAluno {
 
     public int listarAlunoPorEscola(){
         Escola escola = null;
-        try{
-            listarEscola(fachada.listarEscola());
-
-            while (escola == null) {
-                System.out.println("Digite o código da escola");
-                int codigo = scan.nextInt();
-                escola = fachada.buscarEscola(codigo);
-                if (escola == null) {
-                    System.out.println("A escola não foi encontrada");
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Erro na comunicação com o servidor");
-            return -1;
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("Erro ao receber a resposta do servidor");
-            return -1;
-
-        }
-
         try{
             listarEscola(fachada.listarEscola());
 

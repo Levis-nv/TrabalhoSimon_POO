@@ -23,15 +23,15 @@ public class FachadaCliente {
         return instancia;
     }
 
-    public String cadastrarAluno(Aluno aluno) throws IOException, ClassNotFoundException {
+    public Boolean cadastrarAluno(Aluno aluno) throws IOException, ClassNotFoundException {
         return comunicacao.cadastrarAluno(aluno);
     }
 
-    public String alterarAluno(Aluno aluno) throws IOException, ClassNotFoundException {
+    public Boolean alterarAluno(Aluno aluno) throws IOException, ClassNotFoundException {
         return comunicacao.alterarAluno(aluno);
     }
 
-    public String excluirAluno(int idAluno) throws IOException, ClassNotFoundException {
+    public Boolean excluirAluno(int idAluno) throws IOException, ClassNotFoundException {
         return comunicacao.excluirAluno(idAluno);
     }
 
@@ -57,15 +57,15 @@ public class FachadaCliente {
 
     // ESCOLA
 
-    public String cadastrarEscola(Escola escola) throws IOException, ClassNotFoundException {
+    public Boolean cadastrarEscola(Escola escola) throws IOException, ClassNotFoundException {
         return comunicacao.cadastrarEscola(escola);
     }
 
-    public String alterarEscola(Escola escola) throws IOException, ClassNotFoundException {
+    public Boolean alterarEscola(Escola escola) throws IOException, ClassNotFoundException {
         return comunicacao.alterarEscola(escola);
     }
 
-    public String excluirEscola(int idEscola) throws IOException, ClassNotFoundException {
+    public Boolean excluirEscola(int idEscola) throws IOException, ClassNotFoundException {
         return comunicacao.excluirEscola(idEscola);
     }
 
@@ -75,5 +75,25 @@ public class FachadaCliente {
 
     public Escola buscarEscola(int codigo) throws IOException, ClassNotFoundException {
         return comunicacao.buscarEscola(codigo);
+    }
+
+    public Boolean cadastrarNutricionista(Nutricionista nutricionista) throws IOException, ClassNotFoundException {
+        return comunicacao.cadastrarNutricionista(nutricionista);
+    }
+
+    public Boolean alterarNutricionista(Nutricionista nutricionista) throws IOException, ClassNotFoundException {
+        return comunicacao.alterarNutricionista(nutricionista);
+    }
+
+    public Boolean excluirNutricionista(int idNutricionista) throws IOException, ClassNotFoundException {
+        return comunicacao.excluirNutricionista(idNutricionista);
+    }
+
+    public ArrayList<Nutricionista> listarNutricionista()  throws IOException, ClassNotFoundException {
+        return comunicacao.listarNutricionista();
+    }
+
+    public Nutricionista buscarNutricionista(int codigo) throws IOException, ClassNotFoundException {
+        return comunicacao.buscarNutricionista(codigo);
     }
 }

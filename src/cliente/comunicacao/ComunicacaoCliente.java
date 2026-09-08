@@ -35,34 +35,34 @@ public class ComunicacaoCliente {
 
     // ALUNO
 
-    public String cadastrarAluno(Aluno aluno) throws IOException, ClassNotFoundException {
+    public Boolean cadastrarAluno(Aluno aluno) throws IOException, ClassNotFoundException {
         Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.CADASTRAR, aluno);
 
         output.writeObject(mensagem);
         output.flush();
 
         Mensagem resposta = (Mensagem) input.readObject();
-        return (String) resposta.getDados();
+        return (Boolean) resposta.getDados();
     }
 
-    public String alterarAluno(Aluno aluno) throws IOException, ClassNotFoundException {
+    public Boolean alterarAluno(Aluno aluno) throws IOException, ClassNotFoundException {
         Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.ALTERAR, aluno);
 
         output.writeObject(mensagem);
         output.flush();
 
         Mensagem resposta = (Mensagem) input.readObject();
-        return (String) resposta.getDados();
+        return (Boolean) resposta.getDados();
     }
 
-    public String excluirAluno(int idAluno) throws IOException, ClassNotFoundException {
+    public Boolean excluirAluno(int idAluno) throws IOException, ClassNotFoundException {
         Mensagem mensagem = new Mensagem(Entidade.ALUNO, Operacao.EXCLUIR, idAluno);
 
         output.writeObject(mensagem);
         output.flush();
 
         Mensagem resposta = (Mensagem) input.readObject();
-        return (String) resposta.getDados();
+        return (Boolean) resposta.getDados();
     }
 
     public ArrayList<Aluno> listarAluno() throws IOException, ClassNotFoundException {
@@ -126,34 +126,34 @@ public class ComunicacaoCliente {
 
     // ESCOLA
 
-    public String cadastrarEscola(Escola escola) throws IOException, ClassNotFoundException {
+    public Boolean cadastrarEscola(Escola escola) throws IOException, ClassNotFoundException {
         Mensagem mensagem = new Mensagem(Entidade.ESCOLA, Operacao.CADASTRAR, escola);
 
         output.writeObject(mensagem);
         output.flush();
 
         Mensagem resposta = (Mensagem) input.readObject();
-        return (String) resposta.getDados();
+        return (Boolean) resposta.getDados();
     }
 
-    public String alterarEscola(Escola escola) throws IOException, ClassNotFoundException {
+    public Boolean alterarEscola(Escola escola) throws IOException, ClassNotFoundException {
         Mensagem mensagem = new Mensagem(Entidade.ESCOLA, Operacao.ALTERAR, escola);
 
         output.writeObject(mensagem);
         output.flush();
 
         Mensagem resposta = (Mensagem) input.readObject();
-        return (String) resposta.getDados();
+        return (Boolean) resposta.getDados();
     }
 
-    public String excluirEscola(int idEscola) throws IOException, ClassNotFoundException {
+    public Boolean excluirEscola(int idEscola) throws IOException, ClassNotFoundException {
         Mensagem mensagem = new Mensagem(Entidade.ESCOLA, Operacao.EXCLUIR, idEscola);
 
         output.writeObject(mensagem);
         output.flush();
 
         Mensagem resposta = (Mensagem) input.readObject();
-        return (String) resposta.getDados();
+        return (Boolean) resposta.getDados();
     }
 
     public ArrayList<Escola> listarEscola() throws IOException, ClassNotFoundException {
@@ -178,5 +178,53 @@ public class ComunicacaoCliente {
 
     //NUTRICIONISTA
 
+    public Boolean cadastrarNutricionista(Nutricionista nutricionista) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.NUTRICIONISTA, Operacao.CADASTRAR, nutricionista);
 
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (Boolean) resposta.getDados();
+    }
+
+    public Boolean alterarNutricionista(Nutricionista nutricionista) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.NUTRICIONISTA, Operacao.ALTERAR, nutricionista);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (Boolean) resposta.getDados();
+    }
+
+    public Boolean excluirNutricionista(int idNutricionista) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.NUTRICIONISTA, Operacao.EXCLUIR, idNutricionista);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (Boolean) resposta.getDados();
+    }
+
+    public ArrayList<Nutricionista> listarNutricionista() throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.NUTRICIONISTA, Operacao.LISTAR);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (ArrayList<Nutricionista>) resposta.getDados();
+    }
+
+    public Nutricionista buscarNutricionista(int codigo) throws IOException, ClassNotFoundException {
+        Mensagem mensagem = new Mensagem(Entidade.NUTRICIONISTA, Operacao.BUSCAR, codigo);
+
+        output.writeObject(mensagem);
+        output.flush();
+
+        Mensagem resposta = (Mensagem) input.readObject();
+        return (Nutricionista) resposta.getDados();
+    }
 }

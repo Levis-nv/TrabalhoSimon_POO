@@ -76,9 +76,12 @@ public class UINutricionista {
         Nutricionista nutricionista = new Nutricionista(nome, nomeUsuario, senha);
 
         try {
-            String resposta = fachada.cadastrarNutricionista(nutricionista);
+            if (fachada.cadastrarNutricionista(nutricionista)){
+                System.out.println("Cadastro realizado com sucesso");
+            } else {
+                System.out.println("Erro ao cadastrar");
+            }
 
-            System.out.println(resposta);
         } catch (IOException e) {
             System.out.println("Erro na comunicação com o servidor");
 
@@ -153,8 +156,11 @@ public class UINutricionista {
         } while (op < 1 || op > 4);
 
         try {
-            String resposta = fachada.alterarNutricionista(nutricionistaAlterado);
-            System.out.println(resposta);
+            if (fachada.alterarNutricionista(nutricionistaAlterado)){
+                System.out.println("Nutricionista alterado com sucesso");
+            } else {
+                System.out.println("Erro ao alterar");
+            }
 
         } catch (IOException e) {
             System.out.println("Erro na comunicação com o servidor");
@@ -200,9 +206,11 @@ public class UINutricionista {
         }
 
         try {
-            String resposta = fachada.excluirNutricionista(nutricionista.getId());
-
-            System.out.println(resposta);
+            if (fachada.excluirNutricionista(nutricionista.getId())) {
+                System.out.println("Nutricionista excluido com sucesso");
+            } else {
+                System.out.println("Erro ao excluir");
+            }
         } catch (IOException e) {
             System.out.println("Erro na comunicação com o servidor");
 

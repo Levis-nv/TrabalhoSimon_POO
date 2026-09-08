@@ -74,9 +74,12 @@ public class UIEscola {
         Escola escola = new Escola(nome);
 
         try {
-            String resposta = fachada.cadastrarEscola(escola);
+            if (fachada.cadastrarEscola(escola)){
+                System.out.println("Cadastro realizado com sucesso");
+            } else {
+                System.out.println("Erro ao cadastrar");
+            }
 
-            System.out.println(resposta);
         } catch (IOException e) {
             System.out.println("Erro na comunicação com o servidor");
 
@@ -124,9 +127,11 @@ public class UIEscola {
         escolaAlterada.setNome(scan.next());
 
         try {
-            String resposta = fachada.alterarEscola(escolaAlterada);
-            System.out.println(resposta);
-
+            if (fachada.alterarEscola(escolaAlterada)) {
+                System.out.println("Alteração realizada com sucesso");
+            } else {
+                System.out.println("Erro ao alterar");
+            }
         } catch (IOException e) {
             System.out.println("Erro na comunicação com o servidor");
 
@@ -171,9 +176,11 @@ public class UIEscola {
         }
 
         try {
-            String resposta = fachada.excluirEscola(escola.getId());
-
-            System.out.println(resposta);
+            if (fachada.excluirEscola(escola.getId())) {
+                System.out.println("Escola excluida com sucesso");
+            } else {
+                System.out.println("Erro ao excluir");
+            }
         } catch (IOException e) {
             System.out.println("Erro na comunicação com o servidor");
 

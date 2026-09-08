@@ -79,19 +79,21 @@ public class ServidorFachada {
     }
 
     // NUTRICIONISTA
-    public boolean cadastrarNutricionista(Nutricionista nutricionista) {
+
+    public Boolean cadastrarNutricionista(Nutricionista nutricionista) {
         return controleNutricionista.cadastrarNutricionista(nutricionista);
     }
 
-    public boolean alterarNutricionista(Nutricionista nutricionista) {
+    public Boolean alterarNutricionista(Nutricionista nutricionista) {
         return controleNutricionista.alterarNutricionista(nutricionista);
     }
 
-    public boolean removerNutricionista(Nutricionista nutricionista) {
-        return controleNutricionista.excluirNutricionista(nutricionista.getId());
+    public Boolean excluirNutricionista(int idNutricionista) {
+        return controleNutricionista.excluirNutricionista(idNutricionista);
     }
 
     public ArrayList<Nutricionista> listarNutricionista() {
         return controleNutricionista.listarNutricionista();
     }
+
 }
