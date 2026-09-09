@@ -1,7 +1,10 @@
-package servidor.repositorio;
+package repositorio;
 
-import modelo.entidade.Aluno;
-import modelo.entidade.Classificacao;
+import modelo.Aluno;
+import modelo.Avaliacao;
+import modelo.Classificacao;
+import modelo.Escola;
+
 import java.util.ArrayList;
 
 public class RepositorioAluno {
@@ -10,7 +13,7 @@ public class RepositorioAluno {
     private final ArrayList<Aluno> bancoDeAlunos;
     private int id;
 
-    public RepositorioAluno() {
+    private RepositorioAluno() {
         this.bancoDeAlunos = new ArrayList<>();
     }
 
@@ -110,6 +113,27 @@ public class RepositorioAluno {
             if(a.getNome().equalsIgnoreCase(aluno.getNome())){
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    public Aluno buscarAluno(int idAluno) {
+        int posicao = buscarPosicao(idAluno);
+        if (posicao == -1) {
+            return null;
+        }
+
+        return bancoDeAlunos.get(posicao);
+    }
+
+    public boolean avaliacao(Avaliacao avaliacao) {
+
+        if (avaliacao != null) {
+            Aluno aluno = buscarAluno(avaliacao.getIdAluno());
+            aluno.getAvaliacao().add(avaliacao);
+
+            return true;
         }
 
         return false;

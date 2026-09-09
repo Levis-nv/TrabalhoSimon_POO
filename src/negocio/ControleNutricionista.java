@@ -1,7 +1,8 @@
-package servidor.negocio;
+package negocio;
 
-import modelo.entidade.Nutricionista;
-import servidor.repositorio.RepositorioNutricionista;
+import modelo.Aluno;
+import modelo.Nutricionista;
+import repositorio.RepositorioNutricionista;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class ControleNutricionista {
     private RepositorioNutricionista repositorio;
     private static ControleNutricionista instancia;
 
-    public ControleNutricionista() {
+    private ControleNutricionista() {
         this.repositorio = RepositorioNutricionista.getInstance();
     }
 
@@ -23,7 +24,7 @@ public class ControleNutricionista {
     }
 
     public boolean cadastrarNutricionista(Nutricionista nutricionista) {
-        if (validacao(nutricionista)) {
+        if (!validacao(nutricionista)) {
             return repositorio.adicionarNuricionista(nutricionista);
         }
 
@@ -54,6 +55,18 @@ public class ControleNutricionista {
         if (nutricionista == null){
             return false;
         }
-        return !repositorio.verificarNutricionista(nutricionista);
+        return repositorio.verificarNutricionista(nutricionista);
+    }
+
+    public Nutricionista buscarNutricionista(int idNutricionista) {
+        return repositorio.buscarNutricionista(idNutricionista);
+    }
+
+    public boolean login(String user, String senha) {
+        if (user.isEmpty() || senha.isEmpty()){
+            return false;
+        }
+
+        return repositorio.login(user, senha);
     }
 }

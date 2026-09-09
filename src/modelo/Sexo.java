@@ -1,4 +1,4 @@
-package modelo.entidade;
+package modelo;
 
 public enum Sexo {
     MASCULINO,

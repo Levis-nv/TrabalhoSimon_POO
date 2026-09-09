@@ -1,6 +1,7 @@
-package servidor.repositorio;
+package repositorio;
 
-import modelo.entidade.Nutricionista;
+import modelo.Aluno;
+import modelo.Nutricionista;
 import java.util.ArrayList;
 
 public class RepositorioNutricionista {
@@ -9,7 +10,7 @@ public class RepositorioNutricionista {
     private final ArrayList<Nutricionista> bancoDeNutricionista;
     private int id;
 
-    public RepositorioNutricionista() {
+    private RepositorioNutricionista() {
         this.bancoDeNutricionista = new ArrayList<>();
     }
 
@@ -78,4 +79,22 @@ public class RepositorioNutricionista {
         return false;
     }
 
+    public Nutricionista buscarNutricionista(int idNutricionista) {
+        int posicao = buscarPosicao(idNutricionista);
+        if (posicao == -1) {
+            return null;
+        }
+
+        return bancoDeNutricionista.get(posicao);
+    }
+
+    public boolean login(String user, String senha) {
+        for (Nutricionista n: bancoDeNutricionista) {
+            if (n.getNomeUsuario().equalsIgnoreCase(user) && n.getSenha().equalsIgnoreCase(senha)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

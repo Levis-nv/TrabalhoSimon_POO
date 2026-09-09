@@ -1,6 +1,6 @@
-package servidor.repositorio;
+package repositorio;
 
-import modelo.entidade.Escola;
+import modelo.Escola;
 import java.util.ArrayList;
 
 public class RepositorioEscola {
@@ -9,7 +9,7 @@ public class RepositorioEscola {
     private final ArrayList<Escola> bancoDeEscola;
     private int id;
 
-    public RepositorioEscola(){
+    private RepositorioEscola(){
         this.bancoDeEscola = new ArrayList<>();
     }
 
@@ -76,6 +76,15 @@ public class RepositorioEscola {
         }
 
         return false;
+    }
+
+    public Escola buscarEscola(int idEscola) {
+        int posicao = buscarPosicao(idEscola);
+        if (posicao == -1) {
+            return null;
+        }
+
+        return bancoDeEscola.get(posicao);
     }
 
 }

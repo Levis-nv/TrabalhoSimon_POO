@@ -1,4 +1,4 @@
-package modelo.entidade;
+package modelo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -25,6 +25,7 @@ public class Aluno implements Serializable {
             this.sexo = sexo;
             this.peso = peso;
             this.altura = altura;
+            this.escola = escola;
             this.avaliacao =  new ArrayList<Avaliacao>();
         }
     }
@@ -118,7 +119,7 @@ public class Aluno implements Serializable {
     }
 
     public ArrayList<Avaliacao> getAvaliacao() {
-        return new ArrayList<>(this.avaliacao);
+        return this.avaliacao;
     }
 
 }

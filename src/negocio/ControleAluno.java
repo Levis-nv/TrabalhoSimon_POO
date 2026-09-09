@@ -1,8 +1,9 @@
-package servidor.negocio;
+package negocio;
 
-import modelo.entidade.Aluno;
-import modelo.entidade.Classificacao;
-import servidor.repositorio.RepositorioAluno;
+import modelo.Aluno;
+import modelo.Avaliacao;
+import modelo.Classificacao;
+import repositorio.RepositorioAluno;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class ControleAluno {
     private RepositorioAluno repositorio;
     private static ControleAluno instancia;
 
-    public ControleAluno() {
+    private ControleAluno() {
         this.repositorio = RepositorioAluno.getInstancia();
     }
 
@@ -37,7 +38,7 @@ public class ControleAluno {
 
     public boolean alterarAluno(Aluno aluno) {
 
-        if (validacao(aluno)) {
+        if (!validacao(aluno)) {
             aluno.setImc(calcularIMC(aluno.getAltura(), aluno.getPeso()));
 
             aluno.setClassificacao(Classificacao.gerarClassificacao(aluno.getImc()));
@@ -94,8 +95,21 @@ public class ControleAluno {
     }
 
     private double calcularIMC(double altura, double peso){
-        return peso/(altura * altura);
+        double imc = peso/(altura * altura);
+        imc = Math.round(imc * 100.0) / 100.0;
+        return imc;
     }
 
-    private
+    public Aluno buscarAluno(int idAluno) {
+        return repositorio.buscarAluno(idAluno);
+    }
+
+    public boolean avaliacao(Avaliacao avaliacao){
+        if (avaliacao == null) {
+            return false;
+        }
+
+        return repositorio.avaliacao(avaliacao);
+    }
+
 }

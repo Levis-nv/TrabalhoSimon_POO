@@ -1,31 +1,27 @@
-package servidor.fachada;
+package negocio;
 
-import modelo.entidade.Aluno;
-import modelo.entidade.Escola;
-import modelo.entidade.Classificacao;
-import modelo.entidade.Nutricionista;
-import servidor.negocio.ControleNutricionista;
+import modelo.*;
 
-import servidor.negocio.ControleAluno;
-import servidor.negocio.ControleEscola;
-
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class ServidorFachada {
+public class Fachada {
     private ControleAluno controleAluno;
     private ControleEscola controleEscola;
-    private static ServidorFachada instancia;
+    private static Fachada instancia;
     private ControleNutricionista controleNutricionista;
+    private GeradorRelatorio geradorRelatorio;
 
-    private ServidorFachada() {
+    private Fachada() {
         this.controleAluno = ControleAluno.getInstance();
         this.controleEscola = ControleEscola.getInstance();
         this.controleNutricionista = ControleNutricionista.getInstance();
+        this.geradorRelatorio = GeradorRelatorio.getInstance();
     }
 
-    public static ServidorFachada getInstancia() {
+    public static Fachada getInstancia() {
         if (instancia == null) {
-            instancia = new ServidorFachada();
+            instancia = new Fachada();
         }
         return instancia;
     }
@@ -60,6 +56,14 @@ public class ServidorFachada {
         return controleAluno.listarFaixaDeRisco();
     }
 
+    public Aluno buscarAluno(int idAluno) {
+        return controleAluno.buscarAluno(idAluno);
+    }
+
+    public boolean avaliacao(Avaliacao avaliacao) {
+        return controleAluno.avaliacao(avaliacao);
+    }
+
     // ESCOLA
 
     public boolean cadastrarEscola(Escola escola){
@@ -78,6 +82,10 @@ public class ServidorFachada {
         return controleEscola.listarEscolas();
     }
 
+    public Escola buscarEscola(int idEscola) {
+        return controleEscola.buscarEscola(idEscola);
+    }
+
     // NUTRICIONISTA
 
     public Boolean cadastrarNutricionista(Nutricionista nutricionista) {
@@ -94,6 +102,28 @@ public class ServidorFachada {
 
     public ArrayList<Nutricionista> listarNutricionista() {
         return controleNutricionista.listarNutricionista();
+    }
+
+    public Nutricionista buscarNutricionista(int idNutricionista) {
+        return controleNutricionista.buscarNutricionista(idNutricionista);
+    }
+
+    public boolean login(String user, String senha) {
+        return controleNutricionista.login(user, senha);
+    }
+
+    // RELATORIOS
+
+    public void gerarRelatorioAlunos(ArrayList<Aluno> alunos) throws IOException {
+        geradorRelatorio.gerarRelatorioAlunos(alunos);
+    }
+
+    public void gerarRelatorioEscola(Escola escola, ArrayList<Aluno> alunos) throws IOException {
+        geradorRelatorio.gerarRelatorioEscola(escola, alunos);
+    }
+
+    public void gerarRelatorioGeral(ArrayList<Aluno> alunos) throws IOException {
+        geradorRelatorio.gerarRelatorioGeral(alunos);
     }
 
 }
